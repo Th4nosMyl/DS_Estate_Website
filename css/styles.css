@@ -1,0 +1,834 @@
+/* Γενική Επαναφορά */
+* {
+  margin: 0; /* Αφαιρεί το προεπιλεγμένο περιθώριο */
+  padding: 0; /* Αφαιρεί το προεπιλεγμένο εσωτερικό περιθώριο */
+  box-sizing: border-box; /* Περιλαμβάνει τα περιθώρια και τις εσωτερικές αποστάσεις στο συνολικό πλάτος και ύψος του στοιχείου */
+}
+
+body {
+  font-family: "Poppins", sans-serif; /* Ορίζει τη γραμματοσειρά του σώματος */
+  line-height: 1.6; /* Ορίζει το ύψος γραμμής για το κείμενο */
+  display: flex; /* Ορίζει την εμφάνιση του σώματος ως flex container */
+  flex-direction: column; /* Ορίζει την κατεύθυνση του flex container ως στήλη */
+  min-height: 100vh; /* Ορίζει το ελάχιστο ύψος του σώματος στο 100% του ύψους του παραθύρου */
+  background-color: #f0f4f8; /* Ορίζει το χρώμα του φόντου */
+}
+
+/* Επικεφαλίδα και Πλοήγηση */
+header {
+  background: #007bff; /* Ορίζει το χρώμα του φόντου της επικεφαλίδας */
+  color: #fff; /* Ορίζει το χρώμα του κειμένου της επικεφαλίδας */
+}
+
+nav {
+  display: flex; /* Ορίζει την εμφάνιση του navigation ως flex container */
+  justify-content: space-between; /* Κατανέμει το διάστημα μεταξύ των στοιχείων */
+  align-items: center; /* Κεντράρει τα στοιχεία κατακόρυφα */
+  padding: 1em; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #00aaff; /* Ορίζει το χρώμα του φόντου του navigation */
+  color: #fff; /* Ορίζει το χρώμα του κειμένου του navigation */
+}
+
+.logo {
+  font-size: 1.5em; /* Ορίζει το μέγεθος γραμματοσειράς για το λογότυπο */
+  color: #fff; /* Ορίζει το χρώμα του κειμένου του λογότυπου */
+}
+
+.logo a {
+  color: #fff; /* Ορίζει το χρώμα του κειμένου των συνδέσμων στο λογότυπο */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση από τους συνδέσμους */
+}
+
+.nav-links {
+  list-style: none; /* Αφαιρεί τα bullets από τη λίστα */
+  display: flex; /* Ορίζει την εμφάνιση της λίστας ως flex container */
+  margin: 0; /* Αφαιρεί το περιθώριο της λίστας */
+}
+
+.nav-links li {
+  margin-left: 1em; /* Προσθέτει περιθώριο αριστερά από κάθε στοιχείο της λίστας */
+}
+
+.nav-links a {
+  color: #fff; /* Ορίζει το χρώμα του κειμένου των συνδέσμων */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση από τους συνδέσμους */
+  padding: 0.5em 1em; /* Προσθέτει εσωτερικό περιθώριο στους συνδέσμους */
+  transition: background 0.3s, color 0.3s; /* Ορίζει την μετάβαση για το φόντο και το χρώμα των συνδέσμων */
+}
+
+.nav-links a:hover {
+  color: #ffcc00; /* Ορίζει το χρώμα του κειμένου κατά την αιώρηση */
+}
+
+.nav-links a.active {
+  font-weight: bold; /* Ορίζει το κείμενο ως έντονο */
+  color: #ffdd57; /* Ορίζει το χρώμα του κειμένου για τον ενεργό σύνδεσμο */
+}
+
+.hamburger {
+  display: none; /* Κρύβει το εικονίδιο του hamburger σε ευρύτερες οθόνες */
+  flex-direction: column; /* Ορίζει την κατεύθυνση των γραμμών του hamburger */
+  cursor: pointer; /* Ορίζει το δείκτη του ποντικιού ως δείκτη για το hamburger */
+}
+
+.hamburger span {
+  height: 3px; /* Ορίζει το ύψος κάθε γραμμής του hamburger */
+  width: 25px; /* Ορίζει το πλάτος κάθε γραμμής του hamburger */
+  background: #fff; /* Ορίζει το χρώμα του φόντου των γραμμών */
+  margin: 4px; /* Προσθέτει περιθώριο γύρω από κάθε γραμμή */
+  transition: all 0.3s; /* Ορίζει τη μετάβαση για όλες τις ιδιότητες */
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Κρύβει τη λίστα συνδέσμων σε μικρότερες οθόνες */
+    flex-direction: column; /* Ορίζει την κατεύθυνση της λίστας ως στήλη */
+    width: 100%; /* Ορίζει το πλάτος της λίστας στο 100% */
+    background: #007bff; /* Ορίζει το χρώμα του φόντου της λίστας */
+    position: absolute; /* Ορίζει τη θέση της λίστας ως απόλυτη */
+    top: 60px; /* Ορίζει την απόσταση από την κορυφή */
+    left: 0; /* Ορίζει την απόσταση από τα αριστερά */
+  }
+
+  .nav-links.active {
+    display: flex; /* Εμφανίζει τη λίστα συνδέσμων όταν είναι ενεργή */
+  }
+
+  .hamburger {
+    display: flex; /* Εμφανίζει το εικονίδιο του hamburger σε μικρότερες οθόνες */
+  }
+}
+
+.username-display {
+  font-weight: bold; /* Ορίζει το κείμενο ως έντονο */
+  color: #fff; /* Ορίζει το χρώμα του κειμένου */
+  margin-left: auto; /* Ορίζει το περιθώριο αριστερά ως αυτόματο */
+  padding: 0.5em; /* Προσθέτει εσωτερικό περιθώριο */
+  background: #007bff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 5px; /* Ορίζει στρογγυλεμένες γωνίες */
+}
+
+.username-display a {
+  color: #fff; /* Ορίζει το χρώμα του κειμένου των συνδέσμων */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση από τους συνδέσμους */
+}
+
+/* Κύριο Περιεχόμενο */
+main {
+  flex: 1; /* Ορίζει την κύρια περιοχή περιεχομένου να επεκτείνεται για να καταλάβει τον διαθέσιμο χώρο */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+}
+
+footer {
+  background-color: #0099ff; /* Ορίζει το χρώμα του φόντου του footer */
+  color: white; /* Ορίζει το χρώμα του κειμένου στο footer */
+  text-align: center; /* Κεντράρει το κείμενο μέσα στο footer */
+  padding: 20px 0; /* Προσθέτει padding πάνω και κάτω στο footer */
+}
+
+.footer-content {
+  display: flex; /* Χρησιμοποιεί flexbox για τη διάταξη των στοιχείων */
+  flex-direction: column; /* Ορίζει τη διάταξη των στοιχείων σε στήλη */
+  align-items: center; /* Κεντράρει τα στοιχεία οριζόντια */
+  justify-content: center; /* Κεντράρει τα στοιχεία κάθετα */
+}
+
+.contact-info {
+  margin-bottom: 20px; /* Προσθέτει κάτω περιθώριο για διαχωρισμό από τα υπόλοιπα στοιχεία */
+}
+
+.map {
+  display: flex; /* Χρησιμοποιεί flexbox για τη διάταξη του χάρτη */
+  justify-content: center; /* Κεντράρει τον χάρτη οριζόντια */
+  align-items: center; /* Κεντράρει τον χάρτη κάθετα */
+}
+
+.map iframe {
+  border: 0; /* Αφαιρεί το περίγραμμα από το iframe */
+  width: 100%; /* Ορίζει το πλάτος του iframe να είναι 100% του διαθέσιμου χώρου */
+  max-width: 400px; /* Ορίζει το μέγιστο πλάτος του iframe σε 400 pixels */
+  height: 200px; /* Ορίζει το ύψος του iframe σε 200 pixels */
+}
+
+@media (max-width: 768px) {
+  /* Εφαρμόζει τους παρακάτω κανόνες για οθόνες πλάτους μικρότερου ή ίσου των 768 pixels */
+  .footer-content {
+    flex-direction: column; /* Ορίζει τη διάταξη των στοιχείων σε στήλη */
+    align-items: center; /* Κεντράρει τα στοιχεία οριζόντια */
+  }
+
+  .map iframe {
+    width: 100%; /* Ορίζει το πλάτος του iframe να είναι 100% του διαθέσιμου χώρου */
+    height: 150px; /* Ορίζει το ύψος του iframe σε 150 pixels */
+  }
+}
+
+/* Λίστα Ακινήτων */
+.properties {
+  display: flex; /* Ορίζει την εμφάνιση ως flex container */
+  flex-wrap: wrap; /* Επιτρέπει την αναδίπλωση των στοιχείων */
+  gap: 20px; /* Προσθέτει κενά μεταξύ των στοιχείων */
+  justify-content: center; /* Κεντράρει τα στοιχεία */
+}
+
+.property {
+  border: 1px solid #ddd; /* Ορίζει το περίγραμμα των ακινήτων */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  flex: 1 1 300px; /* Ορίζει την ευκαμψία των στοιχείων */
+  max-width: 400px; /* Ορίζει το μέγιστο πλάτος */
+  background-color: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+}
+
+.property img {
+  width: 100%; /* Ορίζει το πλάτος της εικόνας στο 100% */
+  height: auto; /* Διατηρεί τις αναλογίες */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+}
+
+.property h2 {
+  font-size: 1.5em; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  margin: 10px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.property p {
+  margin: 5px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.property a {
+  display: inline-block; /* Ορίζει την εμφάνιση των συνδέσμων */
+  padding: 10px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: #fff; /* Ορίζει το χρώμα του κειμένου */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.property a:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Φόρμες */
+.forms {
+  display: flex; /* Ορίζει την εμφάνιση ως flex container */
+  justify-content: space-around; /* Κατανέμει το διάστημα μεταξύ των στοιχείων */
+  margin-top: 20px; /* Προσθέτει περιθώριο πάνω */
+}
+
+.form-container {
+  border: 1px solid #ddd; /* Ορίζει το περίγραμμα της φόρμας */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  width: 45%; /* Ορίζει το πλάτος της φόρμας */
+  box-sizing: border-box; /* Περιλαμβάνει τα περιθώρια και τις εσωτερικές αποστάσεις στο συνολικό πλάτος */
+  background: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+}
+
+.form-container h2 {
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.form-container form {
+  display: flex; /* Ορίζει την εμφάνιση της φόρμας ως flex container */
+  flex-direction: column; /* Ορίζει την κατεύθυνση ως στήλη */
+}
+
+.form-container label {
+  margin-bottom: 5px; /* Προσθέτει περιθώριο κάτω */
+  font-weight: bold; /* Ορίζει το κείμενο ως έντονο */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.form-container input,
+.form-container select {
+  padding: 10px; /* Προσθέτει εσωτερικό περιθώριο */
+  margin-bottom: 10px; /* Προσθέτει περιθώριο κάτω */
+  border: 1px solid #ccc; /* Ορίζει το περίγραμμα */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  width: 100%; /* Ορίζει το πλάτος στο 100% */
+  box-sizing: border-box; /* Περιλαμβάνει τα περιθώρια και τις εσωτερικές αποστάσεις στο συνολικό πλάτος */
+}
+
+.form-container button {
+  padding: 10px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  border: none; /* Αφαιρεί το περίγραμμα */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  cursor: pointer; /* Ορίζει τον δείκτη του ποντικιού ως δείκτη */
+  font-size: 16px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  align-self: center; /* Κεντράρει το κουμπί */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.form-container button:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Μηνύματα Σφαλμάτων και Επιτυχίας */
+.errors,
+.success {
+  margin-top: 20px; /* Προσθέτει περιθώριο πάνω */
+  padding: 10px; /* Προσθέτει εσωτερικό περιθώριο */
+  border: 1px solid; /* Ορίζει το περίγραμμα */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+}
+
+.errors {
+  background-color: #fdd; /* Ορίζει το χρώμα του φόντου για τα σφάλματα */
+  border-color: #f00; /* Ορίζει το χρώμα του περιγράμματος για τα σφάλματα */
+  color: #721c24; /* Ορίζει το χρώμα του κειμένου για τα σφάλματα */
+}
+
+.success {
+  background-color: #dfd; /* Ορίζει το χρώμα του φόντου για την επιτυχία */
+  border-color: #0f0; /* Ορίζει το χρώμα του περιγράμματος για την επιτυχία */
+}
+
+/* Λεπτομέρειες Ακινήτων */
+.property-details {
+  max-width: 600px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 20px auto; /* Κεντράρει το περιεχόμενο */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+}
+
+.property-details img {
+  max-width: 100%; /* Ορίζει το μέγιστο πλάτος στο 100% */
+  height: auto; /* Διατηρεί τις αναλογίες */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+}
+
+.property-details h2 {
+  margin-top: 10px; /* Προσθέτει περιθώριο πάνω */
+  font-size: 24px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.property-details p {
+  margin: 10px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  font-size: 18px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+}
+
+/* Κοντέινερ Κρατήσεων */
+.booking-container {
+  max-width: 800px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 0 auto; /* Κεντράρει το περιεχόμενο */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+}
+
+.booking-container h1 {
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.property-details {
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+}
+
+.property-details img {
+  max-width: 100%; /* Ορίζει το μέγιστο πλάτος στο 100% */
+  height: auto; /* Διατηρεί τις αναλογίες */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+}
+
+.property-details h2 {
+  margin-bottom: 10px; /* Προσθέτει περιθώριο κάτω */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.property-details p {
+  margin: 5px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.booking-form {
+  display: flex; /* Ορίζει την εμφάνιση της φόρμας ως flex container */
+  flex-direction: column; /* Ορίζει την κατεύθυνση ως στήλη */
+  gap: 15px; /* Προσθέτει κενά μεταξύ των στοιχείων */
+}
+
+.form-group {
+  display: flex; /* Ορίζει την εμφάνιση της ομάδας φόρμας ως flex container */
+  flex-direction: column; /* Ορίζει την κατεύθυνση ως στήλη */
+}
+
+.form-group label {
+  margin-bottom: 5px; /* Προσθέτει περιθώριο κάτω */
+  font-weight: bold; /* Ορίζει το κείμενο ως έντονο */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.form-group input {
+  padding: 10px; /* Προσθέτει εσωτερικό περιθώριο */
+  border: 1px solid #ccc; /* Ορίζει το περίγραμμα */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+}
+
+button[type="submit"] {
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  border: none; /* Αφαιρεί το περίγραμμα */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  font-size: 16px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  cursor: pointer; /* Ορίζει τον δείκτη του ποντικιού ως δείκτη */
+  align-self: center; /* Κεντράρει το κουμπί */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Μήνυμα Κρατήσεων */
+.booking-message {
+  max-width: 600px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 50px auto; /* Κεντράρει το περιεχόμενο */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+}
+
+.booking-message p {
+  margin: 10px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  font-size: 18px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.booking-message .button {
+  display: inline-block; /* Ορίζει την εμφάνιση του κουμπιού */
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  margin-top: 20px; /* Προσθέτει περιθώριο πάνω */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.booking-message .button:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Λεπτομέρειες Επιβεβαίωσης */
+.confirmation-details {
+  max-width: 600px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 50px auto; /* Κεντράρει το περιεχόμενο */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+}
+
+.confirmation-details h1 {
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.confirmation-details h2 {
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.confirmation-details p {
+  margin: 10px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  font-size: 18px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.confirmation-details a.button {
+  display: inline-block; /* Ορίζει την εμφάνιση του κουμπιού */
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  margin-top: 20px; /* Προσθέτει περιθώριο πάνω */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.confirmation-details a.button:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Δημιουργία Φόρμας Καταχώρησης */
+.create-listing-container {
+  max-width: 600px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 50px auto; /* Κεντράρει το περιεχόμενο */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+}
+
+.create-listing-container form {
+  display: flex; /* Ορίζει την εμφάνιση της φόρμας ως flex container */
+  flex-direction: column; /* Ορίζει την κατεύθυνση ως στήλη */
+}
+
+.create-listing-container label {
+  margin-bottom: 5px; /* Προσθέτει περιθώριο κάτω */
+  font-weight: bold; /* Ορίζει το κείμενο ως έντονο */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.create-listing-container input[type="text"],
+.create-listing-container input[type="number"],
+.create-listing-container input[type="file"],
+.create-listing-container button {
+  padding: 10px; /* Προσθέτει εσωτερικό περιθώριο */
+  margin-bottom: 10px; /* Προσθέτει περιθώριο κάτω */
+  border: 1px solid #ccc; /* Ορίζει το περίγραμμα */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  font-size: 16px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  width: 100%; /* Ορίζει το πλάτος στο 100% */
+  box-sizing: border-box; /* Περιλαμβάνει τα περιθώρια και τις εσωτερικές αποστάσεις στο συνολικό πλάτος */
+}
+
+.create-listing-container button {
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  border: none; /* Αφαιρεί το περίγραμμα */
+  cursor: pointer; /* Ορίζει τον δείκτη του ποντικιού ως δείκτη */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.create-listing-container button:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Στυλ για το κουμπί διαγραφής */
+.delete-btn {
+  display: inline-block; /* Ορίζει την εμφάνιση του κουμπιού */
+  padding: 8px 12px; /* Προσθέτει εσωτερικό περιθώριο */
+  margin-top: 10px; /* Προσθέτει περιθώριο πάνω */
+  background-color: #dc3545; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  font-size: 14px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.delete-btn:hover {
+  background-color: #c82333; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Κοντέινερ για τις μη διαθέσιμες ημερομηνίες */
+.unavailable-dates-container {
+  max-width: 600px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 50px auto; /* Κεντράρει το περιεχόμενο */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+}
+
+.unavailable-dates-container h1 {
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.unavailable-dates-container p {
+  margin: 10px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  font-size: 18px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.unavailable-dates-container ul {
+  list-style-type: none; /* Αφαιρεί τα bullets από τη λίστα */
+  padding: 0; /* Αφαιρεί το εσωτερικό περιθώριο */
+}
+
+.unavailable-dates-container li {
+  margin: 10px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  font-size: 16px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.unavailable-dates-container a.button {
+  display: inline-block; /* Ορίζει την εμφάνιση του κουμπιού */
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  margin-top: 20px; /* Προσθέτει περιθώριο πάνω */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.unavailable-dates-container a.button:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Κοντέινερ Διαγραφής Λογαριασμού */
+.delete-account-container {
+  max-width: 600px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 50px auto; /* Κεντράρει το περιεχόμενο */
+  padding: 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background: #fff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+}
+
+.delete-account-container h1 {
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.delete-account-container p {
+  margin: 20px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+  font-size: 18px; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.delete-account-container button {
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  border: none; /* Αφαιρεί το περίγραμμα */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  cursor: pointer; /* Ορίζει τον δείκτη του ποντικιού ως δείκτη */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.delete-account-container button:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+/* Εισαγωγικό Τμήμα */
+.intro {
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+  padding: 50px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #f0f8ff; /* Ορίζει το χρώμα του φόντου */
+  position: relative; /* Ορίζει τη θέση ως σχετική */
+}
+
+.intro h1,
+.intro p,
+.intro .button {
+  display: block; /* Ορίζει την εμφάνιση ως μπλοκ στοιχείο */
+  width: fit-content; /* Ορίζει το πλάτος να προσαρμόζεται στο περιεχόμενο */
+  margin: 0 auto; /* Κεντράρει τα στοιχεία */
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+}
+
+.intro h1 {
+  background: rgba(
+    0,
+    153,
+    255,
+    0.7
+  ); /* Ορίζει το χρώμα του φόντου με διαφάνεια */
+  color: #fff; /* Ορίζει το χρώμα του κειμένου */
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  position: relative; /* Ορίζει τη θέση ως σχετική */
+  z-index: 1; /* Ορίζει τη σειρά ζ για την τοποθέτηση */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Προσθέτει σκιά στο κείμενο */
+  font-size: 2.5em; /* Ορίζει το μέγεθος της γραμματοσειράς */
+}
+
+.intro p {
+  background: rgba(
+    0,
+    153,
+    255,
+    0.7
+  ); /* Ορίζει το χρώμα του φόντου με διαφάνεια */
+  color: #fff; /* Ορίζει το χρώμα του κειμένου */
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  position: relative; /* Ορίζει τη θέση ως σχετική */
+  z-index: 1; /* Ορίζει τη σειρά ζ για την τοποθέτηση */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Προσθέτει σκιά στο κείμενο */
+  font-size: 1.2em; /* Ορίζει το μέγεθος της γραμματοσειράς */
+}
+
+.intro .button {
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  position: relative; /* Ορίζει τη θέση ως σχετική */
+  z-index: 1; /* Ορίζει τη σειρά ζ για την τοποθέτηση */
+  display: inline-block; /* Ορίζει την εμφάνιση ως ενσωματωμένο μπλοκ στοιχείο */
+}
+
+.intro .button:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+.logo-container {
+  position: absolute; /* Ορίζει τη θέση ως απόλυτη */
+  top: 50%; /* Ορίζει την απόσταση από την κορυφή στο 50% */
+  left: 50%; /* Ορίζει την απόσταση από τα αριστερά στο 50% */
+  transform: translate(-50%, -50%); /* Κεντράρει το λογότυπο */
+  opacity: 0.2; /* Ορίζει τη διαφάνεια */
+  z-index: -1; /* Τοποθετεί το λογότυπο πίσω από το κείμενο */
+}
+
+.intro-logo {
+  width: 400px; /* Ορίζει το πλάτος του λογότυπου */
+  height: auto; /* Διατηρεί τις αναλογίες */
+}
+
+.intro .container {
+  position: relative; /* Ορίζει τη θέση ως σχετική */
+  z-index: 2; /* Ορίζει τη σειρά ζ για την τοποθέτηση */
+}
+
+/* Ενότητες Σχετικά, Υπηρεσίες και Επικοινωνία */
+section {
+  padding: 50px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+}
+
+section h2 {
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+  font-size: 2em; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+section p,
+section ul {
+  font-size: 1.2em; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+  max-width: 800px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 0 auto; /* Κεντράρει το περιεχόμενο */
+}
+
+section ul {
+  list-style-type: none; /* Αφαιρεί τα bullets από τη λίστα */
+  padding: 0; /* Αφαιρεί το εσωτερικό περιθώριο */
+}
+
+section ul li {
+  margin: 10px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+}
+
+section.contact {
+  background-color: #f9f9f9; /* Ορίζει το χρώμα του φόντου */
+  padding-bottom: 50px; /* Προσθέτει εσωτερικό περιθώριο κάτω */
+}
+
+section.contact p {
+  margin: 5px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+}
+
+.contact-details {
+  margin-top: 20px; /* Προσθέτει περιθώριο πάνω */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+}
+
+/* Υποσέλιδο */
+footer {
+  background-color: #0099ff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+  padding: 10px 0; /* Προσθέτει εσωτερικό περιθώριο πάνω και κάτω */
+}
+
+footer p {
+  margin: 5px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+}
+
+/* Προσθήκες για ευθυγράμμιση */
+.intro h1,
+.intro p,
+.intro .button,
+.contact-details {
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+  display: block; /* Ορίζει την εμφάνιση ως μπλοκ στοιχείο */
+  margin: 0 auto; /* Κεντράρει τα στοιχεία */
+}
+
+.contact {
+  display: flex; /* Ορίζει την εμφάνιση ως flex container */
+  flex-direction: column; /* Ορίζει την κατεύθυνση ως στήλη */
+  align-items: center; /* Κεντράρει τα στοιχεία οριζόντια */
+}
+
+.contact h2 {
+  margin-bottom: 10px; /* Προσθέτει περιθώριο κάτω */
+}
+
+.contact-details {
+  margin: 0 auto; /* Κεντράρει το περιεχόμενο */
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+}
+
+/* Ενότητα Προφίλ */
+.profile {
+  text-align: center; /* Ορίζει το κείμενο στο κέντρο */
+  padding: 50px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #f0f8ff; /* Ορίζει το χρώμα του φόντου */
+  border-radius: 10px; /* Στρογγυλοποιεί τις γωνίες */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέτει σκιά */
+  max-width: 600px; /* Ορίζει το μέγιστο πλάτος */
+  margin: 0 auto; /* Κεντράρει το περιεχόμενο */
+}
+
+.profile h1 {
+  margin-bottom: 20px; /* Προσθέτει περιθώριο κάτω */
+  font-size: 2.5em; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #333; /* Ορίζει το χρώμα του κειμένου */
+}
+
+.profile p {
+  font-size: 1.2em; /* Ορίζει το μέγεθος της γραμματοσειράς */
+  color: #555; /* Ορίζει το χρώμα του κειμένου */
+  margin: 10px 0; /* Προσθέτει περιθώριο πάνω και κάτω */
+}
+
+.profile-form {
+  display: inline-block; /* Ορίζει την εμφάνιση ως ενσωματωμένο μπλοκ στοιχείο */
+  margin: 10px; /* Προσθέτει περιθώριο */
+}
+
+.profile-form .button {
+  padding: 10px 20px; /* Προσθέτει εσωτερικό περιθώριο */
+  background-color: #007bff; /* Ορίζει το χρώμα του φόντου */
+  color: white; /* Ορίζει το χρώμα του κειμένου */
+  text-decoration: none; /* Αφαιρεί την υπογράμμιση */
+  border-radius: 5px; /* Στρογγυλοποιεί τις γωνίες */
+  border: none; /* Αφαιρεί το περίγραμμα */
+  cursor: pointer; /* Ορίζει τον δείκτη του ποντικιού ως δείκτη */
+  transition: background 0.3s; /* Ορίζει την μετάβαση για το φόντο */
+}
+
+.profile-form .button:hover {
+  background-color: #0056b3; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση */
+}
+
+.profile-form .button.delete {
+  background-color: #dc3545; /* Ορίζει το χρώμα του φόντου για το κουμπί διαγραφής */
+}
+
+.profile-form .button.delete:hover {
+  background-color: #c82333; /* Ορίζει το χρώμα του φόντου κατά την αιώρηση για το κουμπί διαγραφής */
+}
