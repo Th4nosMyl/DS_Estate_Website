@@ -1,82 +1,79 @@
 <?php
-session_start(); // Ξεκινάει το session
-require 'includes/config.php'; // Περιλαμβάνει το αρχείο ρύθμισης της βάσης δεδομένων
+session_start(); // Ξεκινάει το session για να κρατήσει τις συνεδριακές μεταβλητές
 
-// Ελέγχει αν ο χρήστης είναι συνδεδεμένος, αν όχι τον ανακατευθύνει στη σελίδα σύνδεσης
+require 'includes/config.php'; // Περιλαμβάνει το αρχείο ρυθμίσεων για τη σύνδεση στη βάση δεδομένων
+
+// Ελέγχει αν ο χρήστης είναι συνδεδεμένος, αν όχι, ανακατευθύνει στη σελίδα σύνδεσης
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
 }
 
-$user_id = $_SESSION['id']; // Παίρνει το ID του χρήστη από τη συνεδρία
+$user_id = $_SESSION['id']; // Παίρνει το ID του συνδεδεμένου χρήστη από τη συνεδρία
 
-// Ελέγχει αν η μέθοδος του αιτήματος είναι POST για διαγραφή κράτησης
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $reservation_id = $_POST['reservation_id']; // Παίρνει το ID της κράτησης από τη φόρμα
-
-    // Διαγραφή κράτησης
-    $stmt = $conn->prepare("DELETE FROM reservations WHERE id = ? AND user_id = ?");
-    $stmt->bind_param("ii", $reservation_id, $user_id);
-    $stmt->execute();
-    $stmt->close();
-
-    // Ανακατεύθυνση στη σελίδα με τις κρατήσεις του χρήστη
-    header("Location: user_reservations.php");
-    exit;
-}
-
-// Απόκτηση κρατήσεων χρήστη
-$stmt = $conn->prepare("SELECT reservations.id, listings.title, reservations.start_date, reservations.end_date, reservations.total_price FROM reservations JOIN listings ON reservations.listing_id = listings.id WHERE reservations.user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$stmt->bind_result($reservation_id, $listing_title, $start_date, $end_date, $total_price);
-$reservations = []; // Αρχικοποιεί τον πίνακα για τις κρατήσεις
-while ($stmt->fetch()) {
-    $reservations[] = [
-        'reservation_id' => $reservation_id,
-        'listing_title' => $listing_title,
-        'start_date' => $start_date,
-        'end_date' => $end_date,
-        'total_price' => $total_price
-    ];
-}
-$stmt->close();
+// Προετοιμάζει το SQL ερώτημα για την απόκτηση των κρατήσεων του χρήστη
+$stmt = $conn->prepare("SELECT listings.title, reservations.start_date, reservations.end_date, reservations.total_price, reservations.id FROM reservations JOIN listings ON reservations.listing_id = listings.id WHERE reservations.user_id = ?");
+$stmt->bind_param("i", $user_id); // Δεσμεύει το ID του χρήστη ως παράμετρο για το SQL ερώτημα
+$stmt->execute(); // Εκτελεί το ερώτημα
+$result = $stmt->get_result(); // Παίρνει το αποτέλεσμα του ερωτήματος
 ?>
 
 <!DOCTYPE html>
 <html lang="el">
 <head>
-    <meta charset="UTF-8"> <!-- Ορίζει τον χαρακτήρα κωδικοποίησης σε UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ορίζει την προβολή για κινητά και συσκευές -->
-    <title>Οι Κρατήσεις Μου - DS Estate</title> <!-- Τίτλος της σελίδας -->
-    <link rel="stylesheet" href="css/styles.css"> <!-- Περιλαμβάνει το αρχείο στυλ -->
-    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico"> <!-- Περιλαμβάνει το favicon -->
+    <meta charset="UTF-8"> <!-- Ορισμός χαρακτήρων του εγγράφου -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ορισμός παραθύρου θέασης για ανταποκρινόμενη σχεδίαση -->
+    <title>Οι Κρατήσεις Μου - DS Estate</title> <!-- Τίτλος του εγγράφου -->
+    <link rel="stylesheet" href="css/styles.css"> <!-- Συνδέει το αρχείο CSS για το στυλ της σελίδας -->
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico"> <!-- Συνδέει το favicon -->
 </head>
 <body>
     <?php include 'includes/navbar.php'; // Περιλαμβάνει το αρχείο πλοήγησης ?>
     <main>
         <div class="reservations-container">
             <h1>Οι Κρατήσεις Μου</h1>
-            <?php if (empty($reservations)): ?> <!-- Ελέγχει αν δεν υπάρχουν κρατήσεις -->
+            <?php if ($result->num_rows == 0): // Ελέγχει αν δεν υπάρχουν κρατήσεις για τον χρήστη ?>
                 <p>Δεν έχετε κάνει καμία κράτηση.</p>
-            <?php else: ?> <!-- Αν υπάρχουν κρατήσεις, τις εμφανίζει -->
+            <?php else: // Εάν υπάρχουν κρατήσεις ?>
                 <ul>
-                    <?php foreach ($reservations as $reservation): ?>
+                    <?php while ($row = $result->fetch_assoc()): // Επαναλαμβάνει για κάθε κράτηση ?>
                         <li>
-                            <p>Ακίνητο: <?php echo htmlspecialchars($reservation['listing_title']); ?></p> <!-- Εμφανίζει τον τίτλο του ακινήτου -->
-                            <p>Ημερομηνία Check-in: <?php echo htmlspecialchars($reservation['start_date']); ?></p> <!-- Εμφανίζει την ημερομηνία check-in -->
-                            <p>Ημερομηνία Check-out: <?php echo htmlspecialchars($reservation['end_date']); ?></p> <!-- Εμφανίζει την ημερομηνία check-out -->
-                            <p>Συνολικό Ποσό: €<?php echo htmlspecialchars($reservation['total_price']); ?></p> <!-- Εμφανίζει το συνολικό ποσό -->
-                            <form action="user_reservations.php" method="post">
-                                <input type="hidden" name="reservation_id" value="<?php echo $reservation['reservation_id']; ?>"> <!-- Κρυφό πεδίο με το ID της κράτησης -->
-                                <button type="submit">Ακύρωση Κράτησης</button> <!-- Κουμπί για ακύρωση της κράτησης -->
+                            <p>Ακίνητο: <?php echo htmlspecialchars($row['title']); ?></p> <!-- Εμφανίζει τον τίτλο του ακινήτου -->
+                            <p>Ημερομηνία Check-in: <?php echo htmlspecialchars($row['start_date']); ?></p> <!-- Εμφανίζει την ημερομηνία check-in -->
+                            <p>Ημερομηνία Check-out: <?php echo htmlspecialchars($row['end_date']); ?></p> <!-- Εμφανίζει την ημερομηνία check-out -->
+                            <p>Συνολικό Ποσό: $<?php echo htmlspecialchars($row['total_price']); ?></p> <!-- Εμφανίζει το συνολικό ποσό -->
+                            <!-- Κουμπί Ακύρωσης Κράτησης -->
+                            <form action="user_reservations.php" method="POST" onsubmit="return confirm('Είστε σίγουροι ότι θέλετε να ακυρώσετε αυτή την κράτηση;');">
+                                <input type="hidden" name="reservation_id" value="<?php echo $row['id']; ?>">
+                                <button type="submit" name="cancel_reservation">Ακύρωση Κράτησης</button>
                             </form>
                         </li>
-                    <?php endforeach; ?>
+                    <?php endwhile; // Τέλος του βρόχου while ?>
                 </ul>
-            <?php endif; ?>
+            <?php endif; // Τέλος του ελέγχου για το αν υπάρχουν κρατήσεις ?>
+            <?php $stmt->close(); // Κλείνει τη δήλωση ?>
         </div>
     </main>
     <?php include 'includes/footer.php'; // Περιλαμβάνει το αρχείο υποσέλιδου ?>
 </body>
 </html>
+
+<?php
+// Διαχείριση ακύρωσης κράτησης
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_reservation'])) {
+    $reservation_id = $_POST['reservation_id'];
+
+    // Προετοιμασία και εκτέλεση της δήλωσης για τη διαγραφή της κράτησης από τη βάση δεδομένων
+    $stmt = $conn->prepare("DELETE FROM reservations WHERE id = ?");
+    $stmt->bind_param("i", $reservation_id);
+
+    // Εκτέλεση της δήλωσης και έλεγχος επιτυχίας
+    if ($stmt->execute()) {
+        header("Location: user_reservations.php"); // Ανακατεύθυνση στη σελίδα των κρατήσεων του χρήστη
+        exit;
+    } else {
+        echo "Κάτι πήγε στραβά. Παρακαλώ δοκιμάστε ξανά.";
+    }
+    $stmt->close();
+}
+?>
